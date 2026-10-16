@@ -17,13 +17,13 @@ export function Footer() {
   return (
     <footer className="mx-auto max-w-[1360px] px-4 pb-14 pt-32 md:px-8 md:pt-40">
       <div className="mb-7 flex items-center gap-4">
-        <span className="t-data text-[12px] text-ink-2">06</span>
+        <span className="t-data text-[12px] text-accent">06</span>
         <span className="h-px flex-1 bg-line-2" />
         <Micro>Operating cost</Micro>
       </div>
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
         <div className="lg:col-span-4">
-          <p className="t-figure text-[64px] text-ink-1 md:text-[84px]">$0.00</p>
+          <p className="t-figure text-[64px] text-accent md:text-[84px]">$0.00</p>
           <p className="mt-3 max-w-[38ch] text-[15px] leading-relaxed text-ink-2">
             per month to run the whole thing in public. Every subsystem was chosen so the demo stays up on free tiers
             and keeps working when no provider key is set.

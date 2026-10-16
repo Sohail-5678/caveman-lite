@@ -176,7 +176,7 @@ export function Hero() {
             <h1 className="t-display mt-7 text-[46px] text-ink-1 sm:text-[60px] xl:text-[76px]">
               Fifty agents.
               <br />
-              <span className="text-ink-3">One upstream call.</span>
+              <span className="text-accent">One upstream call.</span>
             </h1>
             <p className="mt-7 max-w-[56ch] text-[16.5px] leading-[1.6] text-ink-2">
               Fifty agents asking the same question cost one upstream call: a singleflight lock holds the other{" "}
@@ -186,7 +186,7 @@ export function Hero() {
               model that is statistically as good.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-[13.5px]">
-              <a href="#playground" className="group -my-2.5 inline-flex items-center gap-1.5 py-2.5 text-ink-1">
+              <a href="#playground" className="group -my-2.5 inline-flex items-center gap-1.5 py-2.5 text-accent transition-colors hover:text-accent-hi">
                 Call it with the OpenAI SDK
                 <ArrowDown className="size-3.5 text-ink-3 transition-transform duration-200 group-hover:translate-y-0.5" />
               </a>
@@ -220,7 +220,7 @@ export function Hero() {
 
           <div className="lg:col-span-12">
             <div className="mb-7 flex items-center gap-4">
-              <span className="t-data text-[12px] text-ink-2">01</span>
+              <span className="t-data text-[12px] text-accent">01</span>
               <span className="h-px flex-1 bg-line-2" />
               <Micro>Live pipeline</Micro>
             </div>

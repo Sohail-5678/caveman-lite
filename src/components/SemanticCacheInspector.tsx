@@ -591,7 +591,7 @@ export function SemanticCacheInspector() {
           <figure className="bezel flex flex-col md:order-last md:col-span-2 md:mt-3 lg:order-none lg:col-span-1 lg:row-span-2 lg:mt-0 lg:grid lg:grid-rows-subgrid">
             <div className="flex flex-col px-5 pb-3 pt-5 md:px-6 md:pt-6">
               <figcaption>
-                <Micro>
+                <Micro className="text-accent">
                   Fig. 03 — Embedding space, <span className="tok">384-d</span>
                 </Micro>
               </figcaption>

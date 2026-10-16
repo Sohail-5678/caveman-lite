@@ -77,7 +77,7 @@ function Callout({ index, name, children }: { index: string; name: string; child
   return (
     <div className="flex flex-col items-center gap-[3px] text-center [text-shadow:0_1px_10px_rgb(7_8_11/0.95)]">
       <span className="t-micro whitespace-nowrap">
-        <span className="text-ink-3">{index}</span> <span className="text-ink-2">{name}</span>
+        <span className="text-accent-lo">{index}</span> <span className="text-ink-2">{name}</span>
       </span>
       <span className="t-data whitespace-nowrap text-[11.5px] text-ink-1">{children}</span>
     </div>
@@ -613,7 +613,7 @@ export function GatewayTopologyMap() {
       </div>
 
       <figcaption ref={captionRef} className="pointer-events-none absolute left-5 top-5 max-w-[300px] md:left-6 md:top-6">
-        <Micro className="text-ink-2">Fig. 01 — Request corridor</Micro>
+        <Micro className="text-accent">Fig. 01 — Request corridor</Micro>
         <p className="mt-1.5 text-[12.5px] leading-snug text-ink-3 [text-wrap:pretty]">
           <span className="md:hidden">Each packet is one real request.</span>
           <span className="hidden md:inline">

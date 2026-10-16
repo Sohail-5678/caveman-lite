@@ -12,7 +12,7 @@ export function LogoMark({ className }: { className?: string }) {
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
       <path d="M12 2.2 20.6 8.4 18.2 20.2 6 21.6 3.2 9.6Z" fill="rgb(243 240 233 / 0.06)" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
       <path d="M12 2.2 10.8 12.2 20.6 8.4M10.8 12.2 18.2 20.2M10.8 12.2 6 21.6M10.8 12.2 3.2 9.6" stroke="currentColor" strokeOpacity=".5" strokeWidth="1" strokeLinejoin="round" />
-      <circle cx="12" cy="2.2" r="1.35" fill="currentColor" />
+      <circle cx="12" cy="2.2" r="1.35" fill="var(--color-accent)" />
     </svg>
   );
 }
@@ -115,7 +115,7 @@ export function SectionHeader({
   return (
     <header className="mb-10 md:mb-12">
       <div className="mb-7 flex items-center gap-4">
-        <span className="t-data text-[12px] text-ink-2">{index}</span>
+        <span className="t-data text-[12px] text-accent">{index}</span>
         <span className="h-px flex-1 bg-line-2" />
         <Micro>{kicker}</Micro>
       </div>

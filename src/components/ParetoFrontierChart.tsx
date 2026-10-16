@@ -1100,7 +1100,7 @@ export function ParetoFrontierChart() {
                   className={cn(
                     "bezel group flex flex-col p-4 text-left transition-[background-color,border-color] duration-150 xl:flex-1",
                     "before:absolute before:inset-y-4 before:left-0 before:w-[2px] before:rounded-r-[1px] before:bg-transparent before:transition-colors before:duration-150",
-                    active ? "border-line-3 bg-bg-2 before:bg-ink-1" : "hover:border-line-2",
+                    active ? "border-line-3 bg-bg-2 before:bg-accent" : "hover:border-line-2",
                   )}
                 >
                   <span className="flex min-h-[22px] items-center justify-between gap-2">
@@ -1143,7 +1143,7 @@ export function ParetoFrontierChart() {
           <div className="bezel flex flex-col p-5 md:p-6 lg:col-span-7 xl:col-span-6">
             <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
               <p className="flex min-w-0 items-baseline gap-2.5">
-                <Micro className="shrink-0">Fig. 04</Micro>
+                <Micro className="shrink-0 text-accent">Fig. 04</Micro>
                 <Label>Pass rate vs. cost · {node.label}</Label>
               </p>
               <ul className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11.5px] text-ink-3">

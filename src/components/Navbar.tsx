@@ -126,7 +126,7 @@ export function Navbar({ onOpenBench, recede }: { onOpenBench: () => void; reced
                 >
                   {link.label}
                   {active === link.id ? (
-                    <motion.span layoutId="nav-active" className="absolute inset-x-3 -bottom-px h-px bg-ink-1" transition={underline} />
+                    <motion.span layoutId="nav-active" className="absolute inset-x-3 -bottom-px h-px bg-accent" transition={underline} />
                   ) : null}
                 </a>
               </li>
@@ -169,7 +169,7 @@ export function Navbar({ onOpenBench, recede }: { onOpenBench: () => void; reced
                 >
                   {link.label}
                   {active === link.id ? (
-                    <motion.span layoutId="nav-active-rail" className="absolute inset-x-3 bottom-0 h-px bg-ink-1" transition={underline} />
+                    <motion.span layoutId="nav-active-rail" className="absolute inset-x-3 bottom-0 h-px bg-accent" transition={underline} />
                   ) : null}
                 </a>
               </li>

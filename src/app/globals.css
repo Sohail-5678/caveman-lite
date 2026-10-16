@@ -27,6 +27,12 @@
   /* ink-3 lifted for small text on raised bg-3 / bg-4 surfaces, where ink-3 falls under 4.5:1 */
   --color-ink-3-raised: #908d87;
 
+  /* champagne: the v2 brand accent (Sirin Labs palette #D9B08C), chrome only — never a data mark */
+  --color-accent: #d7af88;
+  --color-accent-hi: #e9cbab;
+  --color-accent-lo: #a17e61;
+  --color-accent-line: rgb(215 175 136 / 0.3);
+
   /* hairlines, bone-tinted alpha so they sit on any surface */
   --color-line: rgb(236 233 225 / 0.075);
   --color-line-2: rgb(236 233 225 / 0.12);
@@ -99,12 +105,12 @@
   }
 
   ::selection {
-    background: rgb(243 240 233 / 0.18);
+    background: rgb(215 175 136 / 0.26);
     color: var(--color-ink-1);
   }
 
   :focus-visible {
-    outline: 1.5px solid var(--color-ink-1);
+    outline: 1.5px solid var(--color-accent);
     outline-offset: 2px;
     border-radius: 4px;
   }
@@ -149,7 +155,8 @@
 /* One overhead key light, bone-tinted — never a coloured blob. */
 .key-light {
   background:
-    radial-gradient(1200px 520px at 50% -140px, rgb(243 240 233 / 0.07), transparent 70%);
+    radial-gradient(1200px 520px at 50% -140px, rgb(215 175 136 / 0.085), transparent 70%),
+    radial-gradient(700px 420px at 50% -200px, rgb(243 240 233 / 0.04), transparent 70%);
 }
 
 /* ── materials ──────────────────────────────────────────────────────────── */
@@ -298,16 +305,16 @@
 
 /* Bone key: the one primary action per region. */
 .btn-primary {
-  background: var(--color-ink-1);
-  color: #0b0c0e;
+  background: var(--color-accent);
+  color: #15110d;
   box-shadow:
-    inset 0 -1px 0 rgb(0 0 0 / 0.22),
-    inset 0 1px 0 rgb(255 255 255 / 0.6),
+    inset 0 -1px 0 rgb(60 38 18 / 0.32),
+    inset 0 1px 0 rgb(255 245 230 / 0.55),
     0 1px 2px rgb(0 0 0 / 0.5);
 }
 @media (hover: hover) and (pointer: fine) {
   .btn-primary:hover:not(:disabled) {
-    background: #fffdf8;
+    background: var(--color-accent-hi);
   }
 }
 

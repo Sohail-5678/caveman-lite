@@ -595,7 +595,7 @@ function Histogram({ traces, p95, empty }: { traces: GatewayTrace[]; p95: { gate
   return (
     <figure>
       <figcaption className="mb-1 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <Micro>
+        <Micro className="text-accent">
           Fig. 02 — Time to first token · <span className="tok whitespace-nowrap">ms, log bins</span>
         </Micro>
         <span className="flex items-center gap-4 text-[11.5px] text-ink-3">

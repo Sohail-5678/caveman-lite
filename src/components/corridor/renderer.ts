@@ -19,6 +19,9 @@ import {
   type Vec3,
 } from "@/lib/gateway/choreography";
 
+/** v2 brand accent for the maquette's base plate and lanes: chrome, never a packet or a state. */
+const champagne = (a: number) => `rgba(215,175,136,${a})`;
+
 export const TONE_RGB: Record<Tone, [number, number, number]> = {
   bone: [243, 240, 233],
   malachite: [67, 205, 153],
@@ -1260,16 +1263,16 @@ export class CorridorRenderer {
       [8.7, 0, 4.2],
       [-11.2, 0, 4.2],
     ];
-    this.stroke(plate, rgba("bone", 0.09), 1, true);
+    this.stroke(plate, champagne(0.2), 1, true);
     for (let x = -11; x <= 8.5; x += 0.5) {
       const major = Math.abs(x % 2.5) < 0.01;
-      this.line(x, 0, 4.2, x, 0, 4.2 - (major ? 0.26 : 0.12), rgba("bone", major ? 0.24 : 0.12));
+      this.line(x, 0, 4.2, x, 0, 4.2 - (major ? 0.26 : 0.12), champagne(major ? 0.42 : 0.2));
     }
   }
 
   private drawLanes(): void {
     const { laneSpread, entryX, gates, providers, shieldX } = SCENE;
-    const a = rgba("bone", 0.075);
+    const a = champagne(0.12);
     for (const z of [-laneSpread - 0.08, laneSpread + 0.08]) {
       this.stroke(
         [
