@@ -1,17 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Mona_Sans } from "next/font/google";
+import { Hanken_Grotesk, IBM_Plex_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 
-const mona = Mona_Sans({
+/* v3 type: an editorial serif for display, a warm grotesk for the interface, Plex Mono for telemetry */
+const display = Newsreader({
   subsets: ["latin"],
-  axes: ["wdth"],
-  variable: "--font-mona",
+  axes: ["opsz"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
   display: "swap",
 });
 
-const jetbrains = JetBrains_Mono({
+const ui = Hanken_Grotesk({
   subsets: ["latin"],
-  variable: "--font-jetbrains",
+  variable: "--font-ui",
+  display: "swap",
+});
+
+const code = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-code",
   display: "swap",
 });
 
@@ -23,13 +32,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#07080b",
+  themeColor: "#2e151b",
   colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${mona.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${display.variable} ${ui.variable} ${code.variable}`}>
       <body className="grain">{children}</body>
     </html>
   );

@@ -8,29 +8,47 @@
    Signal steps are OKLCH-balanced and CVD-validated (all-pairs ΔE ≥ 8.6).
    ────────────────────────────────────────────────────────────────────────── */
 
-@theme static {
-  --font-sans: var(--font-mona), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, monospace;
+/* The v3 faces ship no Greek; τ, χ, Δ, σ come from a matching system face instead of a random fallback. */
+@font-face {
+  font-family: "Greek Mono";
+  src: local("SF Mono"), local("SFMono-Regular"), local("Menlo"), local("Consolas"), local("DejaVu Sans Mono");
+  unicode-range: U+0370-03FF;
+}
+@font-face {
+  font-family: "Greek Sans";
+  src: local("Helvetica Neue"), local("Segoe UI"), local("Arial"), local("DejaVu Sans");
+  unicode-range: U+0370-03FF;
+}
+@font-face {
+  font-family: "Greek Serif";
+  src: local("Georgia"), local("Times New Roman"), local("DejaVu Serif");
+  unicode-range: U+0370-03FF;
+}
 
-  /* obsidian neutrals — oklch(L 0.006–0.009 255) */
-  --color-bg-0: #07080b;
-  --color-bg-1: #0d0f12;
-  --color-bg-2: #131619;
-  --color-bg-3: #1b1e22;
-  --color-bg-4: #24272c;
+@theme static {
+  --font-sans: "Greek Sans", var(--font-ui), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Greek Serif", var(--font-display), ui-serif, Georgia, serif;
+  --font-mono: "Greek Mono", var(--font-code), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* v3: oxblood neutrals from #2E151B (HAUS palette); was obsidian — oklch(L 0.006–0.009 255) */
+  --color-bg-0: #2e151b;
+  --color-bg-1: #351d22;
+  --color-bg-2: #3d252a;
+  --color-bg-3: #462f33;
+  --color-bg-4: #4f393d;
 
   /* bone ink — oklch(L 0.010 85) */
-  --color-ink-1: #f3f0e9;
-  --color-ink-2: #b9b5af;
-  --color-ink-3: #83807a;
-  --color-ink-4: #5d5f62;
+  --color-ink-1: #f6ece5;
+  --color-ink-2: #cabab1;
+  --color-ink-3: #a9938b;
+  --color-ink-4: #7c625d;
   /* ink-3 lifted for small text on raised bg-3 / bg-4 surfaces, where ink-3 falls under 4.5:1 */
-  --color-ink-3-raised: #908d87;
+  --color-ink-3-raised: #b49f97;
 
   /* champagne: the v2 brand accent (Sirin Labs palette #D9B08C), chrome only — never a data mark */
   --color-accent: #d7af88;
   --color-accent-hi: #e9cbab;
-  --color-accent-lo: #a17e61;
+  --color-accent-lo: #b39272;
   --color-accent-line: rgb(215 175 136 / 0.3);
 
   /* hairlines, bone-tinted alpha so they sit on any surface */
@@ -169,27 +187,27 @@
   border-radius: 12px;
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.045),
-    0 1px 0 rgb(0 0 0 / 0.5),
-    0 24px 48px -32px rgb(0 0 0 / 0.8);
+    0 1px 0 rgb(20 6 10 / 0.5),
+    0 24px 48px -32px rgb(20 6 10 / 0.8);
 }
 
 /* Glass is reserved for things that float over content: nav, HUD, dock, drawer, tooltips. */
 .glass {
-  background: rgb(13 15 18 / 0.66);
+  background: rgb(53 29 34 / 0.66);
   -webkit-backdrop-filter: blur(18px) saturate(150%);
   backdrop-filter: blur(18px) saturate(150%);
   border: 1px solid var(--color-line-2);
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.09),
-    0 12px 32px -12px rgb(0 0 0 / 0.7);
+    0 12px 32px -12px rgb(20 6 10 / 0.7);
 }
 
 /* Inset well: where live values are read from. */
 .well {
-  background: rgb(0 0 0 / 0.28);
+  background: rgb(20 6 10 / 0.28);
   border: 1px solid var(--color-line);
   border-radius: 8px;
-  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.5);
+  box-shadow: inset 0 1px 2px rgb(20 6 10 / 0.5);
 }
 
 /* Registration marks at the four corners of a figure, like a plotted drawing. */
@@ -209,17 +227,19 @@
 /* ── type ───────────────────────────────────────────────────────────────── */
 
 .t-display {
-  font-stretch: 94%;
-  font-weight: 560;
-  letter-spacing: -0.038em;
-  line-height: 0.98;
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  letter-spacing: -0.028em;
+  line-height: 1;
 }
 
 .t-title {
-  font-stretch: 96%;
-  font-weight: 540;
-  letter-spacing: -0.026em;
-  line-height: 1.08;
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  font-weight: 420;
+  letter-spacing: -0.018em;
+  line-height: 1.1;
 }
 
 .t-micro {
@@ -265,9 +285,8 @@
 }
 
 .t-figure {
-  font-stretch: 92%;
-  font-weight: 520;
-  letter-spacing: -0.035em;
+  font-weight: 500;
+  letter-spacing: -0.03em;
   line-height: 1;
 }
 
@@ -306,11 +325,11 @@
 /* Bone key: the one primary action per region. */
 .btn-primary {
   background: var(--color-accent);
-  color: #15110d;
+  color: #2a1015;
   box-shadow:
     inset 0 -1px 0 rgb(60 38 18 / 0.32),
     inset 0 1px 0 rgb(255 245 230 / 0.55),
-    0 1px 2px rgb(0 0 0 / 0.5);
+    0 1px 2px rgb(20 6 10 / 0.5);
 }
 @media (hover: hover) and (pointer: fine) {
   .btn-primary:hover:not(:disabled) {
@@ -354,7 +373,7 @@
   padding: 3px;
   gap: 2px;
   border-radius: 9px;
-  background: rgb(0 0 0 / 0.3);
+  background: rgb(20 6 10 / 0.3);
   border: 1px solid var(--color-line);
 }
 .seg > button {
@@ -374,7 +393,7 @@
   background: var(--color-bg-3);
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.06),
-    0 1px 2px rgb(0 0 0 / 0.4);
+    0 1px 2px rgb(20 6 10 / 0.4);
 }
 @media (hover: hover) and (pointer: fine) {
   .seg > button:hover {
@@ -429,7 +448,7 @@ input[type="text"] {
 .field {
   width: 100%;
   border-radius: 8px;
-  background: rgb(0 0 0 / 0.32);
+  background: rgb(20 6 10 / 0.32);
   border: 1px solid var(--color-line-2);
   color: var(--color-ink-1);
   padding: 10px 12px;
@@ -439,7 +458,7 @@ input[type="text"] {
   transition:
     border-color 160ms ease,
     box-shadow 160ms ease;
-  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.4);
+  box-shadow: inset 0 1px 2px rgb(20 6 10 / 0.4);
 }
 .field::placeholder {
   color: var(--color-ink-4);
@@ -449,7 +468,7 @@ input[type="text"] {
   outline: none;
   border-color: var(--color-ink-2);
   box-shadow:
-    inset 0 1px 2px rgb(0 0 0 / 0.4),
+    inset 0 1px 2px rgb(20 6 10 / 0.4),
     0 0 0 3px rgb(236 233 225 / 0.12);
 }
 

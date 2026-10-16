@@ -125,7 +125,7 @@ function KpiStrip() {
   ];
 
   return (
-    <div className="mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-[12px] border border-line bg-line shadow-[0_24px_48px_-32px_rgb(0_0_0/0.8)] md:grid-cols-3 xl:grid-cols-[1.4fr_repeat(5,minmax(0,1fr))]">
+    <div className="mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-[12px] border border-line bg-line shadow-[0_24px_48px_-32px_rgb(20_6_10/0.8)] md:grid-cols-3 xl:grid-cols-[1.4fr_repeat(5,minmax(0,1fr))]">
       {cells.map((cell, i) => {
         const lead = i === 0;
         return (
@@ -176,7 +176,7 @@ export function Hero() {
             <h1 className="t-display mt-7 text-[46px] text-ink-1 sm:text-[60px] xl:text-[76px]">
               Fifty agents.
               <br />
-              <span className="text-accent">One upstream call.</span>
+              <span className="italic text-accent">One upstream call.</span>
             </h1>
             <p className="mt-7 max-w-[56ch] text-[16.5px] leading-[1.6] text-ink-2">
               Fifty agents asking the same question cost one upstream call: a singleflight lock holds the other{" "}

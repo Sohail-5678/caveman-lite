@@ -177,7 +177,7 @@ function CodeBlock({ code, lang }: { code: string; lang: Lang }) {
       ref={ref}
       tabIndex={0}
       aria-label={`${LANGS.find((l) => l.id === lang)?.label} example`}
-      className="overflow-x-auto bg-[rgb(0_0_0/0.22)] px-5 py-4 text-[12.5px] leading-[1.75] text-ink-2 focus-visible:outline-offset-[-2px]"
+      className="overflow-x-auto bg-[rgb(20_6_10/0.22)] px-5 py-4 text-[12.5px] leading-[1.75] text-ink-2 focus-visible:outline-offset-[-2px]"
       style={clipped ? { maskImage: FADE, WebkitMaskImage: FADE } : undefined}
     >
       <code>{highlight(code, lang)}</code>

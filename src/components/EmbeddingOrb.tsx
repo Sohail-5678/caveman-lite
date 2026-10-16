@@ -64,7 +64,7 @@ const LABELLED_CONTOURS = [0.8, 0.6, 0.4, 0.2];
 /** Contour labels sit this far round from the meridian facing the viewer, on the side away from B. */
 const LABEL_TURN = 0.45;
 const INK = "243,240,233";
-const HALO = "rgba(13,15,18,0.92)";
+const HALO = "rgba(53,29,34,0.92)";
 
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 const sphere = (polar: number, az: number): V3 => [Math.sin(polar) * Math.cos(az), Math.cos(polar), Math.sin(polar) * Math.sin(az)];
@@ -103,8 +103,9 @@ export function EmbeddingOrb(props: OrbProps) {
     let last = 0;
     let visible = true;
     let cache: { a: Float32Array; b: Float32Array; bg: Float32Array[]; out: ReturnType<typeof layout> } | null = null;
-    const mono =
-      getComputedStyle(document.documentElement).getPropertyValue("--font-jetbrains").trim() || "ui-monospace, monospace";
+    const mono = `"Greek Mono", ${
+      getComputedStyle(document.documentElement).getPropertyValue("--font-code").trim() || "ui-monospace, monospace"
+    }`;
 
     const signal = (tone: Tone, a: number) => {
       const [r, g, b] = TONE_RGB[tone];

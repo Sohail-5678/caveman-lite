@@ -44,7 +44,7 @@ const RGBA: Record<Tone, string[]> = (() => {
   return out;
 })();
 /** bg-0 keyline that separates a glyph from the hairlines behind it. */
-const KEYLINE = Array.from({ length: 101 }, (_, i) => `rgba(7,8,11,${i / 100})`);
+const KEYLINE = Array.from({ length: 101 }, (_, i) => `rgba(46,21,27,${i / 100})`);
 
 const lut = (a: number) => (a <= 0 ? 0 : a >= 1 ? 100 : Math.round(a * 100));
 const rgba = (tone: Tone, a: number) => RGBA[tone][lut(a)];
@@ -1011,7 +1011,8 @@ export class CorridorRenderer {
     const ctx = this.main;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    ctx.drawImage(this.layer, 0, 0);
+    // a frame can arrive before the first resize sizes the cache; drawing a 0×0 canvas throws
+    if (this.layer.width > 0 && this.layer.height > 0) ctx.drawImage(this.layer, 0, 0);
     ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
     ctx.lineCap = "round";
     ctx.lineJoin = "round";

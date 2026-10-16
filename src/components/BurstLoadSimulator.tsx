@@ -250,7 +250,7 @@ function KillSwitch({ burstActive }: { burstActive: boolean }) {
       </div>
 
       <div className="relative h-[64px] w-[132px] shrink-0" style={{ perspective: 380, perspectiveOrigin: "50% 160%" }}>
-        <span aria-hidden className="absolute inset-0 rounded-[9px] border border-line bg-[rgb(0_0_0/0.35)] shadow-[inset_0_1px_3px_rgb(0_0_0/0.6)]" />
+        <span aria-hidden className="absolute inset-0 rounded-[9px] border border-line bg-[rgb(20_6_10/0.35)] shadow-[inset_0_1px_3px_rgb(20_6_10/0.6)]" />
         <button
           ref={keyRef}
           id={keyId}
@@ -276,8 +276,8 @@ function KillSwitch({ burstActive }: { burstActive: boolean }) {
             lidShut
               ? "border-line bg-bg-2 text-ink-3"
               : killed
-                ? "border-line-2 bg-bg-2 text-ink-1 shadow-[inset_0_1px_0_rgb(255_255_255/0.05),0_1px_0_rgb(0_0_0/0.6)]"
-                : "border-[rgb(241_97_89/0.55)] bg-bg-3 text-ink-1 shadow-[inset_0_1px_0_rgb(255_255_255/0.06),0_1px_0_rgb(0_0_0/0.6)]",
+                ? "border-line-2 bg-bg-2 text-ink-1 shadow-[inset_0_1px_0_rgb(255_255_255/0.05),0_1px_0_rgb(20_6_10/0.6)]"
+                : "border-[rgb(241_97_89/0.55)] bg-bg-3 text-ink-1 shadow-[inset_0_1px_0_rgb(255_255_255/0.06),0_1px_0_rgb(20_6_10/0.6)]",
           )}
         >
           <span className={cn("whitespace-nowrap text-[12.5px] font-[600] tracking-[0.01em]", lidShut && "invisible")}>
@@ -314,7 +314,7 @@ function KillSwitch({ burstActive }: { burstActive: boolean }) {
             className="absolute inset-0 flex items-center justify-center rounded-[9px] border border-line-3 [backface-visibility:hidden]"
             style={{
               background: "repeating-linear-gradient(135deg, rgb(236 233 225 / 0.05) 0 1px, transparent 1px 7px), var(--color-bg-2)",
-              boxShadow: "inset 0 2px 0 rgb(241 97 89 / 0.7), 0 10px 22px -12px rgb(0 0 0 / 0.9)",
+              boxShadow: "inset 0 2px 0 rgb(241 97 89 / 0.7), 0 10px 22px -12px rgb(20 6 10 / 0.9)",
             }}
           >
             <span className="t-micro text-ink-2">Arm</span>
@@ -323,7 +323,7 @@ function KillSwitch({ burstActive }: { burstActive: boolean }) {
           {/* underside, seen once the lid swings past vertical */}
           <span
             aria-hidden
-            className="absolute inset-0 rounded-[9px] border border-line-2 bg-[#0a0b0d] [backface-visibility:hidden] [transform:rotateX(180deg)]"
+            className="absolute inset-0 rounded-[9px] border border-line-2 bg-[#1c0b0f] [backface-visibility:hidden] [transform:rotateX(180deg)]"
             style={{ boxShadow: "inset 0 -2px 0 rgb(236 233 225 / 0.08)" }}
           />
         </motion.button>

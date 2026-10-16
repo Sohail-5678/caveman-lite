@@ -114,7 +114,7 @@ export function BenchmarkDrawer({ open, onClose }: { open: boolean; onClose: () 
           <motion.div
             key="scrim"
             aria-hidden
-            className="fixed inset-0 z-50 bg-[rgb(3_4_6/0.45)]"
+            className="fixed inset-0 z-50 bg-[rgb(20_6_10/0.45)]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -129,7 +129,7 @@ export function BenchmarkDrawer({ open, onClose }: { open: boolean; onClose: () 
             aria-modal="true"
             aria-labelledby="bench-title"
             aria-describedby="bench-desc"
-            className="glass fixed inset-y-2 right-2 z-50 flex w-[min(560px,calc(100vw-16px))] flex-col overflow-hidden rounded-2xl bg-[rgb(12_14_17/0.88)] outline-none"
+            className="glass fixed inset-y-2 right-2 z-50 flex w-[min(560px,calc(100vw-16px))] flex-col overflow-hidden rounded-2xl bg-[rgb(53_29_34/0.88)] outline-none"
             initial={reduce ? { opacity: 0 } : { x: "104%" }}
             animate={reduce ? { opacity: 1 } : { x: 0 }}
             exit={reduce ? { opacity: 0 } : { x: "104%" }}

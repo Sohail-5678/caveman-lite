@@ -104,13 +104,13 @@ export function Navbar({ onOpenBench, recede }: { onOpenBench: () => void; reced
         aria-label="Primary"
         className={cn(
           "border-b transition-[background-color,border-color,backdrop-filter] duration-300",
-          scrolled ? "border-line bg-[rgb(7_8_11/0.72)] backdrop-blur-xl" : "border-transparent",
+          scrolled ? "border-line bg-[rgb(46_21_27/0.72)] backdrop-blur-xl" : "border-transparent",
         )}
       >
         <div className="mx-auto flex h-14 max-w-[1360px] items-center justify-between gap-4 px-4 md:px-8">
           <a href="#top" className="group -my-2.5 flex items-center gap-2.5 py-2.5" aria-label="Caveman-Lite home">
             <LogoMark className="size-[22px] text-ink-1 transition-transform duration-300 ease-[var(--ease-out)] group-hover:-rotate-6" />
-            <span className="text-[15px] font-[600] tracking-[-0.02em] text-ink-1 [font-stretch:96%]">caveman-lite</span>
+            <span className="text-[15px] font-[600] tracking-[-0.02em] text-ink-1">caveman-lite</span>
           </a>
 
           <ul className="hidden h-full items-stretch gap-1 lg:flex">
