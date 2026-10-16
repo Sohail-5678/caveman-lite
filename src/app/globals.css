@@ -1,0 +1,535 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Caveman-Lite — "obsidian instrument" design system
+   Chrome is monochrome (bone on obsidian). Colour only appears as signal:
+   malachite = served from cache · glacier = fast tier / coalesced
+   amber = frontier tier / reroute · cinnabar = blocked / open circuit
+   Signal steps are OKLCH-balanced and CVD-validated (all-pairs ΔE ≥ 8.6).
+   ────────────────────────────────────────────────────────────────────────── */
+
+@theme static {
+  --font-sans: var(--font-mona), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* obsidian neutrals — oklch(L 0.006–0.009 255) */
+  --color-bg-0: #07080b;
+  --color-bg-1: #0d0f12;
+  --color-bg-2: #131619;
+  --color-bg-3: #1b1e22;
+  --color-bg-4: #24272c;
+
+  /* bone ink — oklch(L 0.010 85) */
+  --color-ink-1: #f3f0e9;
+  --color-ink-2: #b9b5af;
+  --color-ink-3: #83807a;
+  --color-ink-4: #5d5f62;
+  /* ink-3 lifted for small text on raised bg-3 / bg-4 surfaces, where ink-3 falls under 4.5:1 */
+  --color-ink-3-raised: #908d87;
+
+  /* hairlines, bone-tinted alpha so they sit on any surface */
+  --color-line: rgb(236 233 225 / 0.075);
+  --color-line-2: rgb(236 233 225 / 0.12);
+  --color-line-3: rgb(236 233 225 / 0.2);
+
+  /* signal — scene, status chips, small marks */
+  --color-malachite: #43cd99;
+  --color-glacier: #5cabee;
+  --color-amber: #ffc65d;
+  --color-cinnabar: #f16159;
+
+  /* chart steps — same hues inside the dark categorical band */
+  --color-malachite-chart: #30a378;
+  --color-glacier-chart: #4998da;
+  --color-amber-chart: #c48725;
+  --color-cinnabar-chart: #d24d47;
+  --color-bone-chart: #95928b;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-line);
+  }
+
+  html {
+    color-scheme: dark;
+    background: var(--color-bg-0);
+    color: var(--color-ink-1);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    scroll-padding-top: 76px;
+  }
+  @media (max-width: 1023px) {
+    html {
+      scroll-padding-top: 108px;
+    }
+  }
+
+  /* Anchor jumps land with a section's index rail 24px under the bar instead of on its top padding:
+     margin = bar height + 24 − section padding-top − scroll-padding-top. */
+  section[id]:not(#corridor) {
+    scroll-margin-top: calc(98px + 24px - 128px - 108px);
+  }
+  @media (min-width: 768px) {
+    section[id]:not(#corridor) {
+      scroll-margin-top: calc(98px + 24px - 160px - 108px);
+    }
+  }
+  @media (min-width: 1024px) {
+    section[id]:not(#corridor) {
+      scroll-margin-top: calc(57px + 24px - 160px - 76px);
+    }
+  }
+
+  body {
+    min-height: 100dvh;
+    background: var(--color-bg-0);
+    font-size: 15px;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgb(243 240 233 / 0.18);
+    color: var(--color-ink-1);
+  }
+
+  :focus-visible {
+    outline: 1.5px solid var(--color-ink-1);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(236 233 225 / 0.14) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(236 233 225 / 0.12);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: var(--font-mono);
+  }
+}
+
+@layer components {
+/* ── atmosphere ─────────────────────────────────────────────────────────── */
+
+/* Film grain keeps the large dark fields from banding and gives the glass something to refract. */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* One overhead key light, bone-tinted — never a coloured blob. */
+.key-light {
+  background:
+    radial-gradient(1200px 520px at 50% -140px, rgb(243 240 233 / 0.07), transparent 70%);
+}
+
+/* ── materials ──────────────────────────────────────────────────────────── */
+
+/* Machined instrument bezel: solid, hairline, faint top bevel. Most surfaces use this. */
+.bezel {
+  position: relative;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.018), transparent 120px), var(--color-bg-1);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.045),
+    0 1px 0 rgb(0 0 0 / 0.5),
+    0 24px 48px -32px rgb(0 0 0 / 0.8);
+}
+
+/* Glass is reserved for things that float over content: nav, HUD, dock, drawer, tooltips. */
+.glass {
+  background: rgb(13 15 18 / 0.66);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid var(--color-line-2);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.09),
+    0 12px 32px -12px rgb(0 0 0 / 0.7);
+}
+
+/* Inset well: where live values are read from. */
+.well {
+  background: rgb(0 0 0 / 0.28);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.5);
+}
+
+/* Registration marks at the four corners of a figure, like a plotted drawing. */
+.reg-marks {
+  --reg: rgb(236 233 225 / 0.28);
+  background:
+    linear-gradient(var(--reg), var(--reg)) left top / 9px 1px no-repeat,
+    linear-gradient(var(--reg), var(--reg)) left top / 1px 9px no-repeat,
+    linear-gradient(var(--reg), var(--reg)) right top / 9px 1px no-repeat,
+    linear-gradient(var(--reg), var(--reg)) right top / 1px 9px no-repeat,
+    linear-gradient(var(--reg), var(--reg)) left bottom / 9px 1px no-repeat,
+    linear-gradient(var(--reg), var(--reg)) left bottom / 1px 9px no-repeat,
+    linear-gradient(var(--reg), var(--reg)) right bottom / 9px 1px no-repeat,
+    linear-gradient(var(--reg), var(--reg)) right bottom / 1px 9px no-repeat;
+}
+
+/* ── type ───────────────────────────────────────────────────────────────── */
+
+.t-display {
+  font-stretch: 94%;
+  font-weight: 560;
+  letter-spacing: -0.038em;
+  line-height: 0.98;
+}
+
+.t-title {
+  font-stretch: 96%;
+  font-weight: 540;
+  letter-spacing: -0.026em;
+  line-height: 1.08;
+}
+
+.t-micro {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+}
+
+/* Case-sensitive tokens (paths, units, τ, p) opt out of the uppercase label transform. */
+.t-micro .tok,
+.chip .tok {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Panel titles: sentence case, the entry point of every instrument panel. */
+.t-label {
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.3;
+  color: var(--color-ink-1);
+}
+
+/* In-panel section heading, one step under the panel title. */
+.t-sublabel {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 520;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+  color: var(--color-ink-2);
+}
+
+.t-data {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.t-figure {
+  font-stretch: 92%;
+  font-weight: 520;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+/* ── controls ───────────────────────────────────────────────────────────── */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 520;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  transition:
+    transform 140ms var(--ease-out),
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+/* Bone key: the one primary action per region. */
+.btn-primary {
+  background: var(--color-ink-1);
+  color: #0b0c0e;
+  box-shadow:
+    inset 0 -1px 0 rgb(0 0 0 / 0.22),
+    inset 0 1px 0 rgb(255 255 255 / 0.6),
+    0 1px 2px rgb(0 0 0 / 0.5);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover:not(:disabled) {
+    background: #fffdf8;
+  }
+}
+
+.btn-secondary {
+  background: var(--color-bg-3);
+  color: var(--color-ink-1);
+  border: 1px solid var(--color-line-2);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-secondary:hover:not(:disabled) {
+    background: var(--color-bg-4);
+    border-color: var(--color-line-3);
+  }
+}
+
+.btn-ghost {
+  color: var(--color-ink-2);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-ghost:hover:not(:disabled) {
+    color: var(--color-ink-1);
+    background: rgb(236 233 225 / 0.05);
+  }
+}
+
+.btn-sm {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 12.5px;
+  border-radius: 7px;
+}
+
+/* Segmented control */
+.seg {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: 9px;
+  background: rgb(0 0 0 / 0.3);
+  border: 1px solid var(--color-line);
+}
+.seg > button {
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--color-ink-3);
+  transition:
+    color 160ms ease,
+    background-color 160ms ease;
+}
+.seg > button[aria-pressed="true"],
+.seg > button[aria-selected="true"] {
+  color: var(--color-ink-1);
+  background: var(--color-bg-3);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 1px 2px rgb(0 0 0 / 0.4);
+}
+@media (hover: hover) and (pointer: fine) {
+  .seg > button:hover {
+    color: var(--color-ink-1);
+  }
+}
+
+/* Status chip: glyph + label, never colour alone. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-ink-2);
+  background: rgb(236 233 225 / 0.04);
+  border: 1px solid var(--color-line);
+}
+/* Neutral at every tone: the 7px glyph carries the hue, and only a fault earns a coloured edge. */
+.chip[data-tone] {
+  color: var(--color-ink-1);
+}
+.chip[data-tone="cinnabar"] {
+  border-color: rgb(241 97 89 / 0.38);
+}
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--color-ink-3);
+  border: 1px solid var(--color-line-2);
+  border-bottom-width: 2px;
+}
+
+textarea,
+input[type="text"] {
+  font: inherit;
+}
+
+.field {
+  width: 100%;
+  border-radius: 8px;
+  background: rgb(0 0 0 / 0.32);
+  border: 1px solid var(--color-line-2);
+  color: var(--color-ink-1);
+  padding: 10px 12px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  resize: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.4);
+}
+.field::placeholder {
+  color: var(--color-ink-4);
+}
+.field:focus,
+.field:focus-within {
+  outline: none;
+  border-color: var(--color-ink-2);
+  box-shadow:
+    inset 0 1px 2px rgb(0 0 0 / 0.4),
+    0 0 0 3px rgb(236 233 225 / 0.12);
+}
+
+/* ── motion ─────────────────────────────────────────────────────────────── */
+
+/* Sections surface from depth once, as they enter the viewport. */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition:
+    opacity 560ms var(--ease-out),
+    transform 640ms var(--ease-out);
+}
+.reveal[data-in="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes beacon {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+.beacon {
+  position: relative;
+}
+.beacon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: beacon 2.4s var(--ease-out) infinite;
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+.row-in {
+  animation: row-in 260ms var(--ease-out);
+}
+
+/* Fault annunciator: the glyph itself blinks, hard on/off like a panel lamp. */
+@keyframes annunciate {
+  50% {
+    opacity: 0.25;
+  }
+}
+.annunciate {
+  animation: annunciate 1.2s steps(1, end) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    transform: none;
+    transition: opacity 300ms ease;
+  }
+  .beacon::after,
+  .row-in,
+  .annunciate {
+    animation: none;
+  }
+}
+
+/* Touch: controls grow to finger size; the visual language stays the same. */
+@media (pointer: coarse) {
+  .btn {
+    height: 44px;
+  }
+  .btn-sm {
+    height: 40px;
+  }
+  .seg > button {
+    height: 36px;
+  }
+}
+
+}

@@ -1,0 +1,38 @@
+{
+  "name": "caveman-lite",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-optimizing LLM gateway: entity-aware semantic cache, singleflight stampede lock, learned complexity router, circuit-breaker failover and McNemar shadow evals. Runs at $0 on Vercel Hobby.",
+  "author": "Ameer Sohail Shaik",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.43.0",
+    "lucide-react": "^1.57.0",
+    "next": "15.5.28",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "tailwind-merge": "^3.7.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^22.10.6",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}
