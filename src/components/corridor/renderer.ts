@@ -44,7 +44,7 @@ const RGBA: Record<Tone, string[]> = (() => {
   return out;
 })();
 /** bg-0 keyline that separates a glyph from the hairlines behind it. */
-const KEYLINE = Array.from({ length: 101 }, (_, i) => `rgba(46,21,27,${i / 100})`);
+const KEYLINE = Array.from({ length: 101 }, (_, i) => `rgba(15,4,6,${i / 100})`);
 
 const lut = (a: number) => (a <= 0 ? 0 : a >= 1 ? 100 : Math.round(a * 100));
 const rgba = (tone: Tone, a: number) => RGBA[tone][lut(a)];

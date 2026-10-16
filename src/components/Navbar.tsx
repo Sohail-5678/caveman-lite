@@ -104,7 +104,7 @@ export function Navbar({ onOpenBench, recede }: { onOpenBench: () => void; reced
         aria-label="Primary"
         className={cn(
           "border-b transition-[background-color,border-color,backdrop-filter] duration-300",
-          scrolled ? "border-line bg-[rgb(46_21_27/0.72)] backdrop-blur-xl" : "border-transparent",
+          scrolled ? "border-line bg-[rgb(28_10_14/0.78)] backdrop-blur-xl" : "border-transparent",
         )}
       >
         <div className="mx-auto flex h-14 max-w-[1360px] items-center justify-between gap-4 px-4 md:px-8">

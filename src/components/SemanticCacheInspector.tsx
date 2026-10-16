@@ -595,7 +595,7 @@ export function SemanticCacheInspector() {
                   Fig. 03 — Embedding space, <span className="tok">384-d</span>
                 </Micro>
               </figcaption>
-              <div className="mx-auto mt-2 w-full max-w-[380px] md:max-w-[420px] lg:max-w-[320px]">
+              <div className="stage mx-auto mt-3 w-full max-w-[400px] rounded-[12px] p-2 md:max-w-[440px] lg:max-w-[340px]">
                 <EmbeddingOrb
                   a={analysis.va}
                   b={analysis.vb}

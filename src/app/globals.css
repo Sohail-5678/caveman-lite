@@ -8,34 +8,19 @@
    Signal steps are OKLCH-balanced and CVD-validated (all-pairs ΔE ≥ 8.6).
    ────────────────────────────────────────────────────────────────────────── */
 
-/* The v3 faces ship no Greek; τ, χ, Δ, σ come from a matching system face instead of a random fallback. */
-@font-face {
-  font-family: "Greek Mono";
-  src: local("SF Mono"), local("SFMono-Regular"), local("Menlo"), local("Consolas"), local("DejaVu Sans Mono");
-  unicode-range: U+0370-03FF;
-}
-@font-face {
-  font-family: "Greek Sans";
-  src: local("Helvetica Neue"), local("Segoe UI"), local("Arial"), local("DejaVu Sans");
-  unicode-range: U+0370-03FF;
-}
-@font-face {
-  font-family: "Greek Serif";
-  src: local("Georgia"), local("Times New Roman"), local("DejaVu Serif");
-  unicode-range: U+0370-03FF;
-}
-
 @theme static {
-  --font-sans: "Greek Sans", var(--font-ui), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Greek Serif", var(--font-display), ui-serif, Georgia, serif;
-  --font-mono: "Greek Mono", var(--font-code), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-sans: var(--font-ui), var(--font-greek-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-display), var(--font-greek-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--font-code), var(--font-greek-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
 
-  /* v3: oxblood neutrals from #2E151B (HAUS palette); was obsidian — oklch(L 0.006–0.009 255) */
-  --color-bg-0: #2e151b;
-  --color-bg-1: #351d22;
-  --color-bg-2: #3d252a;
-  --color-bg-3: #462f33;
-  --color-bg-4: #4f393d;
+  /* v3: three values, not one. Page: oxblood-black. Cards: #2E151B (HAUS palette). Stages: recessed near-black; was obsidian — oklch(L 0.006–0.009 255) */
+  --color-bg-0: #1c0a0e;
+  --color-bg-1: #2e151b;
+  --color-bg-2: #381e24;
+  --color-bg-3: #41282d;
+  --color-bg-4: #4b3338;
+  /* recessed display case for the spatial figures: darker than the page, lit from above */
+  --color-stage: #0f0406;
 
   /* bone ink — oklch(L 0.010 85) */
   --color-ink-1: #f6ece5;
@@ -52,9 +37,9 @@
   --color-accent-line: rgb(215 175 136 / 0.3);
 
   /* hairlines, bone-tinted alpha so they sit on any surface */
-  --color-line: rgb(236 233 225 / 0.075);
-  --color-line-2: rgb(236 233 225 / 0.12);
-  --color-line-3: rgb(236 233 225 / 0.2);
+  --color-line: rgb(215 175 136 / 0.1);
+  --color-line-2: rgb(215 175 136 / 0.16);
+  --color-line-3: rgb(215 175 136 / 0.27);
 
   /* signal — scene, status chips, small marks */
   --color-malachite: #43cd99;
@@ -173,8 +158,8 @@
 /* One overhead key light, bone-tinted — never a coloured blob. */
 .key-light {
   background:
-    radial-gradient(1200px 520px at 50% -140px, rgb(215 175 136 / 0.085), transparent 70%),
-    radial-gradient(700px 420px at 50% -200px, rgb(243 240 233 / 0.04), transparent 70%);
+    radial-gradient(1100px 520px at 50% -160px, rgb(215 175 136 / 0.09), transparent 70%),
+    radial-gradient(1600px 900px at 50% -260px, rgb(74 30 40 / 0.55), transparent 72%);
 }
 
 /* ── materials ──────────────────────────────────────────────────────────── */
@@ -182,18 +167,33 @@
 /* Machined instrument bezel: solid, hairline, faint top bevel. Most surfaces use this. */
 .bezel {
   position: relative;
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.018), transparent 120px), var(--color-bg-1);
+  background: linear-gradient(180deg, rgb(233 203 171 / 0.04), transparent 160px), var(--color-bg-1);
   border: 1px solid var(--color-line);
   border-radius: 12px;
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.045),
-    0 1px 0 rgb(20 6 10 / 0.5),
-    0 24px 48px -32px rgb(20 6 10 / 0.8);
+    inset 0 1px 0 rgb(233 203 171 / 0.1),
+    0 1px 0 rgb(8 2 3 / 0.6),
+    0 28px 56px -30px rgb(8 2 3 / 0.9);
+}
+
+/* Stage: the recessed case the spatial figures sit in, so the 3D reads as an object, not as page. */
+.stage {
+  position: relative;
+  background:
+    radial-gradient(110% 85% at 50% -10%, rgb(215 175 136 / 0.1), transparent 58%),
+    radial-gradient(70% 55% at 50% 110%, rgb(46 21 27 / 0.75), transparent 75%),
+    var(--color-stage);
+  border: 1px solid var(--color-line-2);
+  box-shadow:
+    inset 0 1px 0 rgb(233 203 171 / 0.08),
+    inset 0 40px 80px -40px rgb(0 0 0 / 0.7),
+    0 1px 0 rgb(8 2 3 / 0.6),
+    0 28px 56px -30px rgb(8 2 3 / 0.9);
 }
 
 /* Glass is reserved for things that float over content: nav, HUD, dock, drawer, tooltips. */
 .glass {
-  background: rgb(53 29 34 / 0.66);
+  background: rgb(46 21 27 / 0.72);
   -webkit-backdrop-filter: blur(18px) saturate(150%);
   backdrop-filter: blur(18px) saturate(150%);
   border: 1px solid var(--color-line-2);
@@ -204,10 +204,10 @@
 
 /* Inset well: where live values are read from. */
 .well {
-  background: rgb(20 6 10 / 0.28);
+  background: rgb(15 4 6 / 0.55);
   border: 1px solid var(--color-line);
   border-radius: 8px;
-  box-shadow: inset 0 1px 2px rgb(20 6 10 / 0.5);
+  box-shadow: inset 0 1px 2px rgb(8 2 3 / 0.6);
 }
 
 /* Registration marks at the four corners of a figure, like a plotted drawing. */

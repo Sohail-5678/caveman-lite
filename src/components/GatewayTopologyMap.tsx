@@ -75,7 +75,7 @@ function useNow(active: boolean, interval = 250) {
 
 function Callout({ index, name, children }: { index: string; name: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center gap-[3px] text-center [text-shadow:0_1px_10px_rgb(46_21_27/0.95)]">
+    <div className="flex flex-col items-center gap-[3px] text-center [text-shadow:0_1px_10px_rgb(15_4_6/0.95)]">
       <span className="t-micro whitespace-nowrap">
         <span className="text-accent-lo">{index}</span> <span className="text-ink-2">{name}</span>
       </span>
@@ -395,7 +395,7 @@ export function GatewayTopologyMap() {
     <motion.figure
       ref={figureRef}
       style={{ opacity }}
-      className="bezel reg-marks relative isolate overflow-hidden rounded-[14px]"
+      className="stage reg-marks relative isolate overflow-hidden rounded-[14px]"
     >
       {/* depth wash: light from above, floor falling into shadow */}
       <div
@@ -452,7 +452,7 @@ export function GatewayTopologyMap() {
               key={id}
               ref={setTag(id)}
               aria-hidden
-              className="t-data absolute left-0 top-0 rounded-[4px] border border-line-2 bg-[rgb(46_21_27/0.9)] px-1 text-[10.5px] leading-[15px] text-ink-2 opacity-0 transition-opacity duration-150 will-change-transform"
+              className="t-data absolute left-0 top-0 rounded-[4px] border border-line-2 bg-[rgb(15_4_6/0.9)] px-1 text-[10.5px] leading-[15px] text-ink-2 opacity-0 transition-opacity duration-150 will-change-transform"
             >
               {index}
             </span>
@@ -464,7 +464,7 @@ export function GatewayTopologyMap() {
               <div key={id} ref={setSlot(id)} className={slot}>
                 {narrow ? (
                   // phones: name and state glyph only, so the column gives the maquette its width back
-                  <div className="flex flex-col items-start gap-[3px] text-left [text-shadow:0_1px_10px_rgb(46_21_27/0.95)]">
+                  <div className="flex flex-col items-start gap-[3px] text-left [text-shadow:0_1px_10px_rgb(15_4_6/0.95)]">
                     <span className="flex items-center gap-1.5">
                       <Glyph tone={state.tone} size={7} />
                       <span className="t-micro whitespace-nowrap text-ink-2">
@@ -475,7 +475,7 @@ export function GatewayTopologyMap() {
                     {countdown ? <span className="t-micro pl-[13px] text-ink-3">{countdown}</span> : null}
                   </div>
                 ) : (
-                  <div className="flex w-[100px] flex-col items-start gap-[3px] text-left [text-shadow:0_1px_10px_rgb(46_21_27/0.95)]">
+                  <div className="flex w-[100px] flex-col items-start gap-[3px] text-left [text-shadow:0_1px_10px_rgb(15_4_6/0.95)]">
                     <span className="t-micro text-ink-2">{PROVIDER_META[id].name}</span>
                     <span className="t-data whitespace-nowrap text-[11px] text-ink-3">{PROVIDER_META[id].model}</span>
                     <span className="flex items-center gap-1.5">
@@ -497,7 +497,7 @@ export function GatewayTopologyMap() {
           ref={vetoRef}
           aria-hidden
           className={cn(
-            "pointer-events-none absolute left-5 w-[min(300px,calc(100%-40px))] rounded-[10px] border border-line-2 bg-[rgb(53_29_34/0.96)] px-3.5 py-3 shadow-[0_12px_32px_-12px_rgb(20_6_10/0.7)] transition-opacity duration-200 md:left-6",
+            "pointer-events-none absolute left-5 w-[min(300px,calc(100%-40px))] rounded-[10px] border border-line-2 bg-[rgb(46_21_27/0.96)] px-3.5 py-3 shadow-[0_12px_32px_-12px_rgb(20_6_10/0.7)] transition-opacity duration-200 md:left-6",
             cardShown ? "opacity-100" : "opacity-0",
             narrow && "hidden",
           )}
