@@ -4,6 +4,7 @@
  * coloured pixels are small signal marks: packet glyphs, breaker rings and gate accents.
  * Motion happens on events only. When nothing is in flight and the camera has settled, no frame is drawn.
  */
+import { getTheme, onThemeChange, type Theme } from "@/lib/theme";
 import type { ProviderId } from "@/lib/types";
 import type { BreakerState } from "@/lib/router/circuit-breaker";
 import { BREAKER_COOLDOWN_MS, type GatewayController } from "@/lib/gateway/controller";
@@ -19,13 +20,20 @@ import {
   type Vec3,
 } from "@/lib/gateway/choreography";
 
-export const TONE_RGB: Record<Tone, [number, number, number]> = {
-  bone: [243, 240, 233],
-  malachite: [67, 205, 153],
-  glacier: [92, 171, 238],
-  amber: [255, 198, 93],
-  cinnabar: [241, 97, 89],
+type RGB = [number, number, number];
+/** Canvas palettes mirror the CSS tokens: "bone" is the ink the maquette is drawn in. */
+const PALETTES: Record<Theme, { tones: Record<Tone, RGB>; keyline: RGB }> = {
+  dark: {
+    tones: { bone: [243, 240, 233], malachite: [67, 205, 153], glacier: [92, 171, 238], amber: [255, 198, 93], cinnabar: [241, 97, 89] },
+    keyline: [7, 8, 11],
+  },
+  light: {
+    tones: { bone: [23, 24, 27], malachite: [0, 142, 97], glacier: [28, 115, 197], amber: [206, 146, 0], cinnabar: [206, 41, 48] },
+    keyline: [254, 252, 249],
+  },
 };
+
+export const TONE_RGB: Record<Tone, RGB> = { ...PALETTES.dark.tones };
 
 const TONES = Object.keys(TONE_RGB) as Tone[];
 const GATES: GateId[] = ["firewall", "t1", "t2", "lock", "router"];
@@ -42,6 +50,18 @@ const RGBA: Record<Tone, string[]> = (() => {
 })();
 /** bg-0 keyline that separates a glyph from the hairlines behind it. */
 const KEYLINE = Array.from({ length: 101 }, (_, i) => `rgba(7,8,11,${i / 100})`);
+
+/** Swap the canvas palette in place; renderers rebuild their sprites and floor layer on change. */
+export function applyCanvasTheme(theme: Theme): void {
+  const p = PALETTES[theme];
+  for (const tone of TONES) {
+    TONE_RGB[tone] = p.tones[tone];
+    const [r, g, b] = p.tones[tone];
+    for (let i = 0; i <= 100; i++) RGBA[tone][i] = `rgba(${r},${g},${b},${i / 100})`;
+  }
+  const [r, g, b] = p.keyline;
+  for (let i = 0; i <= 100; i++) KEYLINE[i] = `rgba(${r},${g},${b},${i / 100})`;
+}
 
 const lut = (a: number) => (a <= 0 ? 0 : a >= 1 ? 100 : Math.round(a * 100));
 const rgba = (tone: Tone, a: number) => RGBA[tone][lut(a)];
@@ -465,6 +485,7 @@ export class CorridorRenderer {
   private moving = false;
 
   private unsubscribe: (() => void) | null = null;
+  private unsubscribeTheme: (() => void) | null = null;
   private drag: { id: number; x: number; y: number } | null = null;
 
   /* scratch, so per-frame work allocates nothing */
@@ -490,8 +511,15 @@ export class CorridorRenderer {
     for (let x = -11; x <= 8.51; x += 0.5) for (let z = -4; z <= 4.01; z += 0.5) pts.push(x, z);
     this.floor = new Float32Array(pts);
 
+    applyCanvasTheme(getTheme());
     this.sprites = {} as Record<Tone, HTMLCanvasElement>;
     for (const tone of TONES) this.sprites[tone] = this.makeSprite(tone);
+    this.unsubscribeTheme = onThemeChange((theme) => {
+      applyCanvasTheme(theme);
+      for (const tone of TONES) this.sprites[tone] = this.makeSprite(tone);
+      this.layerDirty = true;
+      this.dirty = true;
+    });
 
     const g = SCENE.gates;
     this.order = [
@@ -637,6 +665,7 @@ export class CorridorRenderer {
   dispose(): void {
     this.stop();
     this.unsubscribe?.();
+    this.unsubscribeTheme?.();
     this.labelObserver?.disconnect();
     this.canvas.removeEventListener("pointerdown", this.onPointerDown);
     this.canvas.removeEventListener("pointermove", this.onPointerMove);
@@ -1008,7 +1037,7 @@ export class CorridorRenderer {
     const ctx = this.main;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    ctx.drawImage(this.layer, 0, 0);
+    if (this.layer.width > 0 && this.layer.height > 0) ctx.drawImage(this.layer, 0, 0);
     ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
     ctx.lineCap = "round";
     ctx.lineJoin = "round";

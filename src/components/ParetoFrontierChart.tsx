@@ -468,7 +468,7 @@ function Plot({
         ))}
         {xTicks.map((t) => (
           <g key={t}>
-            <line x1={sx(t)} x2={sx(t)} y1={M.t} y2={H - M.b} stroke="rgb(236 233 225 / 0.05)" shapeRendering="crispEdges" />
+            <line x1={sx(t)} x2={sx(t)} y1={M.t} y2={H - M.b} stroke="rgb(var(--ink-rgb) / 0.05)" shapeRendering="crispEdges" />
             <text x={sx(t)} y={H - M.b + 17} textAnchor="middle" className="fill-[var(--color-ink-3)] font-mono text-[10.5px]">
               {t >= 1000 ? `$${t / 1000}k` : `$${t}`}
             </text>
@@ -483,11 +483,11 @@ function Plot({
         </text>
 
         {/* current model's pass rate, the bar every Δ is read against */}
-        <line x1={M.l} x2={W - M.r} y1={yBase} y2={yBase} stroke="rgb(236 233 225 / 0.16)" shapeRendering="crispEdges" />
+        <line x1={M.l} x2={W - M.r} y1={yBase} y2={yBase} stroke="rgb(var(--ink-rgb) / 0.16)" shapeRendering="crispEdges" />
         <motion.path
           d={stair}
           fill="none"
-          stroke="rgb(236 233 225 / 0.42)"
+          stroke="rgb(var(--ink-rgb) / 0.42)"
           strokeWidth={1.5}
           initial={false}
           animate={{ d: stair }}
@@ -702,10 +702,10 @@ function ForestPlot({ low, high, delta, tone }: { low: number; high: number; del
         <div ref={ref} className="relative h-[70px] min-w-0 flex-1">
           {/* rule row: the band and the point estimate it tests */}
           <div
-            className="absolute top-0 h-[18px] border-x border-dashed border-[rgb(236_233_225/0.24)] bg-[rgb(236_233_225/0.06)]"
+            className="absolute top-0 h-[18px] border-x border-dashed border-[rgb(var(--ink-rgb)/0.24)] bg-[rgb(var(--ink-rgb)/0.06)]"
             style={{ left: `${pos(-RULE)}%`, width: `${pos(RULE) - pos(-RULE)}%` }}
           />
-          <div className="absolute -top-[3px] h-[47px] w-px bg-[rgb(236_233_225/0.24)]" style={{ left: `${pos(0)}%` }} />
+          <div className="absolute -top-[3px] h-[47px] w-px bg-[rgb(var(--ink-rgb)/0.24)]" style={{ left: `${pos(0)}%` }} />
           <motion.span
             className="absolute top-[9px] flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
             initial={false}
@@ -790,7 +790,7 @@ function ReplayMatrix({ node, analysis, candidate }: { node: AgentNode; analysis
   const [said, setSaid] = useState("");
 
   const cell = (v: number, caption?: string) => (
-    <td className={cn("border border-line-2 px-1 py-2.5 align-middle", caption ? "bg-[rgb(236_233_225/0.05)]" : "")}>
+    <td className={cn("border border-line-2 px-1 py-2.5 align-middle", caption ? "bg-[rgb(var(--ink-rgb)/0.05)]" : "")}>
       <span className={cn("t-figure block text-[20px]", caption ? "text-ink-1" : "text-ink-2")}>{v}</span>
       {caption ? <span className="mt-1.5 block whitespace-nowrap text-[10.5px] leading-none text-ink-2">{caption}</span> : null}
     </td>
@@ -968,10 +968,10 @@ function RuleGlyph({ delta, ci }: { delta: number; ci: BootstrapCI }) {
       <span>Δ</span>
       <span className="relative h-[9px]">
         <span
-          className="absolute inset-y-0 border-x border-dashed border-[rgb(236_233_225/0.24)] bg-[rgb(236_233_225/0.06)]"
+          className="absolute inset-y-0 border-x border-dashed border-[rgb(var(--ink-rgb)/0.24)] bg-[rgb(var(--ink-rgb)/0.06)]"
           style={{ left: `${pos(-RULE)}%`, width: `${pos(RULE) - pos(-RULE)}%` }}
         />
-        <span className="absolute -bottom-[13px] -top-px w-px bg-[rgb(236_233_225/0.16)]" style={{ left: `${pos(0)}%` }} />
+        <span className="absolute -bottom-[13px] -top-px w-px bg-[rgb(var(--ink-rgb)/0.16)]" style={{ left: `${pos(0)}%` }} />
         <span
           className="absolute top-1/2 block size-[6px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink-1 shadow-[0_0_0_1.5px_var(--color-bg-1)]"
           style={{ left: `${pos(delta)}%` }}
@@ -1154,7 +1154,7 @@ export function ParetoFrontierChart() {
                   <TierKey tier="frontier" /> Frontier
                 </li>
                 <li className="flex items-center gap-1.5 whitespace-nowrap">
-                  <span className="h-[1.5px] w-4 bg-[rgb(236_233_225/0.42)]" /> Pareto frontier
+                  <span className="h-[1.5px] w-4 bg-[rgb(var(--ink-rgb)/0.42)]" /> Pareto frontier
                 </li>
                 <li className="flex items-center gap-1.5 whitespace-nowrap">
                   <TierKey tier="fast" dominated /> Dominated

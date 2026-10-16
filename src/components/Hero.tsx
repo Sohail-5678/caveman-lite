@@ -125,7 +125,7 @@ function KpiStrip() {
   ];
 
   return (
-    <div className="mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-[12px] border border-line bg-line shadow-[0_24px_48px_-32px_rgb(0_0_0/0.8)] md:grid-cols-3 xl:grid-cols-[1.4fr_repeat(5,minmax(0,1fr))]">
+    <div className="mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-[12px] border border-line bg-line shadow-[0_24px_48px_-32px_rgb(var(--shadow-rgb)/calc(0.8*var(--shade)))] md:grid-cols-3 xl:grid-cols-[1.4fr_repeat(5,minmax(0,1fr))]">
       {cells.map((cell, i) => {
         const lead = i === 0;
         return (

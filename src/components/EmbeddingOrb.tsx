@@ -5,6 +5,7 @@ import { mulberry32 } from "@/lib/utils/prng";
 import { EMBEDDING_DIM } from "@/lib/cache/semantic-cache";
 import type { Tone } from "@/lib/gateway/choreography";
 import { TONE_RGB } from "./corridor/renderer";
+import { getTheme, onThemeChange } from "@/lib/theme";
 
 type V3 = [number, number, number];
 type P2 = { x: number; y: number; z: number };
@@ -63,8 +64,8 @@ const CONTOURS = [0.8, 0.6, 0.4, 0.2, 0, -0.4];
 const LABELLED_CONTOURS = [0.8, 0.6, 0.4, 0.2];
 /** Contour labels sit this far round from the meridian facing the viewer, on the side away from B. */
 const LABEL_TURN = 0.45;
-const INK = "243,240,233";
-const HALO = "rgba(13,15,18,0.92)";
+const INKS = { dark: "243,240,233", light: "23,24,27" } as const;
+const HALOS = { dark: "rgba(13,15,18,0.92)", light: "rgba(254,252,249,0.92)" } as const;
 
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 const sphere = (polar: number, az: number): V3 => [Math.sin(polar) * Math.cos(az), Math.cos(polar), Math.sin(polar) * Math.sin(az)];
@@ -110,7 +111,8 @@ export function EmbeddingOrb(props: OrbProps) {
       const [r, g, b] = TONE_RGB[tone];
       return `rgba(${r},${g},${b},${clamp(a, 0, 1)})`;
     };
-    const ink = (a: number) => `rgba(${INK},${a})`;
+    let theme = getTheme();
+    const ink = (a: number) => `rgba(${INKS[theme]},${a})`;
 
     /** The yaw that turns B's azimuth to screen-right, so the A→B arc is drawn at its true length. */
     const facingB = () => {
@@ -278,7 +280,7 @@ export function EmbeddingOrb(props: OrbProps) {
 
       // endpoints: A is a bone dot, B carries its decision's glyph shape
       const knock = (q: P2, r: number) => {
-        ctx.fillStyle = HALO;
+        ctx.fillStyle = HALOS[theme];
         ctx.beginPath();
         ctx.arc(q.x, q.y, r + 2.2, 0, Math.PI * 2);
         ctx.fill();
@@ -313,7 +315,7 @@ export function EmbeddingOrb(props: OrbProps) {
         const tx = clamp(x, lo, hi);
         const ty = clamp(y, 8, W - 8);
         ctx.textAlign = align;
-        ctx.strokeStyle = HALO;
+        ctx.strokeStyle = HALOS[theme];
         ctx.lineWidth = 3;
         ctx.strokeText(s, tx, ty);
         ctx.fillStyle = fill;
@@ -392,6 +394,10 @@ export function EmbeddingOrb(props: OrbProps) {
       raf = requestAnimationFrame(frame);
     };
     invalidateRef.current = invalidate;
+    const offTheme = onThemeChange((t) => {
+      theme = t;
+      invalidate();
+    });
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -464,6 +470,7 @@ export function EmbeddingOrb(props: OrbProps) {
     canvas.addEventListener("dblclick", reset);
 
     return () => {
+      offTheme();
       cancelAnimationFrame(raf);
       invalidateRef.current = () => {};
       ro.disconnect();

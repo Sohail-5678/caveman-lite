@@ -133,8 +133,8 @@ function WorkerGrid({ traces, inFlight }: { traces: GatewayTrace[]; inFlight: bo
               key={i}
               title={t ? `worker ${i} · ${pathLabel(t).text} · ${fmtMs(t.latencyMs)}` : `worker ${i}`}
               className={cn(
-                "flex aspect-square items-center justify-center rounded-[2px] border border-line-2 bg-[rgb(236_233_225/0.03)] transition-[background-color,border-color] duration-300",
-                !t && inFlight && "border-[rgb(236_233_225/0.34)]",
+                "flex aspect-square items-center justify-center rounded-[2px] border border-line-2 bg-[rgb(var(--ink-rgb)/0.03)] transition-[background-color,border-color] duration-300",
+                !t && inFlight && "border-[rgb(var(--ink-rgb)/0.34)]",
               )}
               style={
                 tone && (inFlight || tone === "cinnabar" || tone === "amber")
@@ -250,7 +250,7 @@ function KillSwitch({ burstActive }: { burstActive: boolean }) {
       </div>
 
       <div className="relative h-[64px] w-[132px] shrink-0" style={{ perspective: 380, perspectiveOrigin: "50% 160%" }}>
-        <span aria-hidden className="absolute inset-0 rounded-[9px] border border-line bg-[rgb(0_0_0/0.35)] shadow-[inset_0_1px_3px_rgb(0_0_0/0.6)]" />
+        <span aria-hidden className="absolute inset-0 rounded-[9px] border border-line bg-[rgb(var(--shadow-rgb)/calc(0.35*var(--shade)))] shadow-[inset_0_1px_3px_rgb(var(--shadow-rgb)/calc(0.6*var(--shade)))]" />
         <button
           ref={keyRef}
           id={keyId}
@@ -276,8 +276,8 @@ function KillSwitch({ burstActive }: { burstActive: boolean }) {
             lidShut
               ? "border-line bg-bg-2 text-ink-3"
               : killed
-                ? "border-line-2 bg-bg-2 text-ink-1 shadow-[inset_0_1px_0_rgb(255_255_255/0.05),0_1px_0_rgb(0_0_0/0.6)]"
-                : "border-[rgb(241_97_89/0.55)] bg-bg-3 text-ink-1 shadow-[inset_0_1px_0_rgb(255_255_255/0.06),0_1px_0_rgb(0_0_0/0.6)]",
+                ? "border-line-2 bg-bg-2 text-ink-1 shadow-[inset_0_1px_0_rgb(255_255_255/0.05),0_1px_0_rgb(var(--shadow-rgb)/calc(0.6*var(--shade)))]"
+                : "border-[rgb(var(--cinnabar-rgb)/0.55)] bg-bg-3 text-ink-1 shadow-[inset_0_1px_0_rgb(255_255_255/0.06),0_1px_0_rgb(var(--shadow-rgb)/calc(0.6*var(--shade)))]",
           )}
         >
           <span className={cn("whitespace-nowrap text-[12.5px] font-[600] tracking-[0.01em]", lidShut && "invisible")}>
@@ -313,18 +313,18 @@ function KillSwitch({ burstActive }: { burstActive: boolean }) {
             aria-hidden
             className="absolute inset-0 flex items-center justify-center rounded-[9px] border border-line-3 [backface-visibility:hidden]"
             style={{
-              background: "repeating-linear-gradient(135deg, rgb(236 233 225 / 0.05) 0 1px, transparent 1px 7px), var(--color-bg-2)",
-              boxShadow: "inset 0 2px 0 rgb(241 97 89 / 0.7), 0 10px 22px -12px rgb(0 0 0 / 0.9)",
+              background: "repeating-linear-gradient(135deg, rgb(var(--ink-rgb) / 0.05) 0 1px, transparent 1px 7px), var(--color-bg-2)",
+              boxShadow: "inset 0 2px 0 rgb(var(--cinnabar-rgb) / 0.7), 0 10px 22px -12px rgb(var(--shadow-rgb) / calc(0.9 * var(--shade)))",
             }}
           >
             <span className="t-micro text-ink-2">Arm</span>
-            <span className="absolute bottom-[6px] left-1/2 h-[2px] w-6 -translate-x-1/2 rounded-full bg-[rgb(236_233_225/0.18)]" />
+            <span className="absolute bottom-[6px] left-1/2 h-[2px] w-6 -translate-x-1/2 rounded-full bg-[rgb(var(--ink-rgb)/0.18)]" />
           </span>
           {/* underside, seen once the lid swings past vertical */}
           <span
             aria-hidden
-            className="absolute inset-0 rounded-[9px] border border-line-2 bg-[#0a0b0d] [backface-visibility:hidden] [transform:rotateX(180deg)]"
-            style={{ boxShadow: "inset 0 -2px 0 rgb(236 233 225 / 0.08)" }}
+            className="absolute inset-0 rounded-[9px] border border-line-2 bg-[var(--lid-under)] [backface-visibility:hidden] [transform:rotateX(180deg)]"
+            style={{ boxShadow: "inset 0 -2px 0 rgb(var(--ink-rgb) / 0.08)" }}
           />
         </motion.button>
       </div>
@@ -368,17 +368,17 @@ function BreakerDiagram({ state, since }: { state: BreakerState; since: number }
       >
         <defs>
           <marker id={marker} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M0 0 8 4 0 8Z" fill="rgb(236 233 225 / 0.4)" />
+            <path d="M0 0 8 4 0 8Z" fill="rgb(var(--ink-rgb) / 0.4)" />
           </marker>
         </defs>
         <g fill="none" strokeWidth="1">
           {state === "OPEN" ? (
             <path d="M212 52H284" stroke="var(--color-ink-2)" strokeWidth={1.5} strokeDasharray={`${72 * progress} 72`} />
           ) : null}
-          <path d="M74 52H148" stroke="rgb(236 233 225 / 0.28)" markerEnd={`url(#${marker})`} />
-          <path d="M212 52H284" stroke="rgb(236 233 225 / 0.28)" markerEnd={`url(#${marker})`} />
-          <path d="M294 34C270 2 228 2 204 30" stroke="rgb(236 233 225 / 0.2)" markerEnd={`url(#${marker})`} />
-          <path d="M290 66C250 122 110 122 70 66" stroke="rgb(236 233 225 / 0.2)" markerEnd={`url(#${marker})`} />
+          <path d="M74 52H148" stroke="rgb(var(--ink-rgb) / 0.28)" markerEnd={`url(#${marker})`} />
+          <path d="M212 52H284" stroke="rgb(var(--ink-rgb) / 0.28)" markerEnd={`url(#${marker})`} />
+          <path d="M294 34C270 2 228 2 204 30" stroke="rgb(var(--ink-rgb) / 0.2)" markerEnd={`url(#${marker})`} />
+          <path d="M290 66C250 122 110 122 70 66" stroke="rgb(var(--ink-rgb) / 0.2)" markerEnd={`url(#${marker})`} />
         </g>
         <g className="fill-[var(--color-ink-3)] font-mono" textAnchor="middle" style={font}>
           <text x="111" y="43">3 failures</text>
@@ -417,7 +417,7 @@ function BreakerDiagram({ state, since }: { state: BreakerState; since: number }
 type Sample = "ok" | "slow" | "429";
 
 const SAMPLE_STYLE: Record<Sample, { height: number; background: string }> = {
-  ok: { height: 12, background: "rgb(236 233 225 / 0.42)" },
+  ok: { height: 12, background: "rgb(var(--ink-rgb) / 0.42)" },
   slow: { height: 16, background: "var(--color-amber-chart)" },
   "429": { height: 20, background: "var(--color-cinnabar-chart)" },
 };
@@ -493,7 +493,7 @@ function ProviderRows() {
                       <span
                         key={i}
                         className="w-[4px] shrink-0 rounded-[1px] sm:w-[5px]"
-                        style={s ? SAMPLE_STYLE[s] : { height: 4, background: "rgb(236 233 225 / 0.08)" }}
+                        style={s ? SAMPLE_STYLE[s] : { height: 4, background: "rgb(var(--ink-rgb) / 0.08)" }}
                       />
                     );
                   })}
@@ -711,7 +711,7 @@ const TRACK_PX = 118;
 const MIN_GAP_PX = 6;
 // Decades are evenly spaced on the log scale, so one repeating hairline marks them all.
 const DECADE_GRID = {
-  backgroundImage: "linear-gradient(90deg, rgb(236 233 225 / 0.06) 1px, transparent 1px)",
+  backgroundImage: "linear-gradient(90deg, rgb(var(--ink-rgb) / 0.06) 1px, transparent 1px)",
   backgroundSize: `${100 / LOG_MAX}% 100%`,
 };
 
@@ -757,7 +757,7 @@ function Dumbbell({ t }: { t: GatewayTrace }) {
   return (
     <div className="relative mx-[3px] h-2.5" style={DECADE_GRID} title={stageTitle(t)}>
       {near ? null : (
-        <span className="absolute top-1/2 h-px -translate-y-1/2 bg-[rgb(236_233_225/0.22)]" style={{ left: pct(Math.min(g, d)), width: pct(Math.abs(d - g)) }} />
+        <span className="absolute top-1/2 h-px -translate-y-1/2 bg-[rgb(var(--ink-rgb)/0.22)]" style={{ left: pct(Math.min(g, d)), width: pct(Math.abs(d - g)) }} />
       )}
       <span className={cn("absolute top-1/2 w-px -translate-y-1/2 bg-[var(--color-bone-chart)]", near ? "h-3" : "h-2")} style={{ left: pct(d) }} />
       <span className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ left: pct(g) }}>
@@ -778,7 +778,7 @@ function DumbbellAxis() {
         </span>
         <span className="flex items-center gap-1.5">
           <span aria-hidden className="flex items-center">
-            <span className="h-px w-1.5 bg-[rgb(236_233_225/0.22)]" />
+            <span className="h-px w-1.5 bg-[rgb(var(--ink-rgb)/0.22)]" />
             <span className="h-2 w-px bg-[var(--color-bone-chart)]" />
           </span>
           <Micro>direct</Micro>
@@ -857,7 +857,7 @@ function TraceTable({ traces, emptyText }: { traces: GatewayTrace[]; emptyText: 
               role="row"
               className={cn(
                 TRACE_GRID,
-                "row-in gap-y-1 border-b border-line py-3 hover:bg-[rgb(236_233_225/0.025)] md:gap-y-0 md:py-2.5",
+                "row-in gap-y-1 border-b border-line py-3 hover:bg-[rgb(var(--ink-rgb)/0.025)] md:gap-y-0 md:py-2.5",
                 !expanded && i >= MOBILE_ROWS && "max-md:hidden",
               )}
             >

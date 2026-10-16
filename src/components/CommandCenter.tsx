@@ -179,7 +179,7 @@ export function CommandCenter() {
           transform: recede ? RECEDE : "none",
           // 16px and 1px on screen once scaled by 0.955
           borderRadius: recede ? 16.75 : 0,
-          boxShadow: planeUp ? "0 0 0 1.05px var(--color-line-2), 0 0 0 100vmax rgb(1 1 2)" : "none",
+          boxShadow: planeUp ? "0 0 0 1.05px var(--color-line-2), 0 0 0 100vmax rgb(var(--floor-rgb))" : "none",
         }}
       />
       <BenchmarkDrawer open={benchOpen} onClose={() => setBenchOpen(false)} />

@@ -5,7 +5,43 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useGateway } from "@/lib/gateway/use-gateway";
 import type { Tone } from "@/lib/gateway/choreography";
 import { cn } from "@/lib/format";
+import { getTheme, setTheme, type Theme } from "@/lib/theme";
 import { GithubMark, Glyph, LogoMark } from "./ui";
+
+/** Sun/moon key: dark is the default, the choice persists per browser. */
+function ThemeToggle() {
+  const [theme, setLocal] = useState<Theme>("dark");
+  useEffect(() => setLocal(getTheme()), []);
+  const next: Theme = theme === "dark" ? "light" : "dark";
+  return (
+    <button
+      type="button"
+      className="btn btn-ghost btn-sm px-2 [@media(pointer:coarse)]:min-w-11"
+      aria-label={`Switch to ${next} theme`}
+      title={`Switch to ${next} theme`}
+      onClick={() => {
+        setTheme(next);
+        setLocal(next);
+      }}
+    >
+      {theme === "dark" ? (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+          <circle cx="8" cy="8" r="3" stroke="currentColor" strokeWidth="1.3" />
+          <path
+            d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"
+            stroke="currentColor"
+            strokeWidth="1.3"
+            strokeLinecap="round"
+          />
+        </svg>
+      ) : (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+          <path d="M13.2 9.6A5.6 5.6 0 0 1 6.4 2.8a5.6 5.6 0 1 0 6.8 6.8Z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+        </svg>
+      )}
+    </button>
+  );
+}
 
 const LINKS = [
   { id: "corridor", label: "Corridor" },
@@ -56,7 +92,7 @@ function SystemStatus() {
     <span
       className={cn(
         "flex size-8 items-center justify-center gap-2 rounded-lg border border-line transition-colors duration-300 md:w-auto md:px-3",
-        open.length > 0 && "border-[rgb(241_97_89/0.38)]",
+        open.length > 0 && "border-[rgb(var(--cinnabar-rgb)/0.38)]",
       )}
       title={text}
     >
@@ -104,7 +140,7 @@ export function Navbar({ onOpenBench, recede }: { onOpenBench: () => void; reced
         aria-label="Primary"
         className={cn(
           "border-b transition-[background-color,border-color,backdrop-filter] duration-300",
-          scrolled ? "border-line bg-[rgb(7_8_11/0.72)] backdrop-blur-xl" : "border-transparent",
+          scrolled ? "border-line bg-[rgb(var(--base-rgb)/0.72)] backdrop-blur-xl" : "border-transparent",
         )}
       >
         <div className="mx-auto flex h-14 max-w-[1360px] items-center justify-between gap-4 px-4 md:px-8">
@@ -139,6 +175,7 @@ export function Navbar({ onOpenBench, recede }: { onOpenBench: () => void; reced
               Verify
               <span className="t-data text-[11px] text-ink-3-raised">30</span>
             </button>
+            <ThemeToggle />
             <a
               href="https://github.com/Sohail-5678/caveman-lite"
               target="_blank"

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Mona_Sans } from "next/font/google";
+import { THEME_BOOT } from "@/lib/theme";
 import "./globals.css";
 
 const mona = Mona_Sans({
@@ -29,7 +30,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${mona.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${mona.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
+      </head>
       <body className="grain">{children}</body>
     </html>
   );

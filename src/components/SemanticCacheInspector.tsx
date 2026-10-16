@@ -194,8 +194,8 @@ function EntityRows({
                     className={cn(
                       "t-data inline-flex h-[22px] items-center gap-1.5 rounded-[5px] border px-1.5 text-[11.5px] transition-colors duration-200",
                       mismatch
-                        ? "border-[rgb(241_97_89/0.45)] bg-[rgb(241_97_89/0.1)] text-[#fbc3bf]"
-                        : "border-line-2 bg-[rgb(236_233_225/0.03)] text-ink-1",
+                        ? "border-[rgb(var(--cinnabar-rgb)/0.45)] bg-[rgb(var(--cinnabar-rgb)/0.1)] text-[var(--cinnabar-ink)]"
+                        : "border-line-2 bg-[rgb(var(--ink-rgb)/0.03)] text-ink-1",
                     )}
                   >
                     {mismatch ? <Glyph tone="cinnabar" size={6} /> : null}
@@ -279,7 +279,7 @@ function SimilarityScale({ similarity, tau, decision }: { similarity: number; ta
   const short = tau !== DEFAULT_THRESHOLD;
   const below = similarity < AXIS_LO;
   // the region past τ is a definition, not an outcome: the verdict shows only in the glyph by the value
-  const zone = "rgb(236 233 225 / 0.05)";
+  const zone = "rgb(var(--ink-rgb) / 0.05)";
 
   // τ labels claim their place first; a tick label that would touch one already placed is dropped
   type AxisLabel = { v: number; text: string; className: string; left: number; width: number };
